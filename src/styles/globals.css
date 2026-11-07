@@ -1,0 +1,311 @@
+@import "tailwindcss";
+@import "./animations.css";
+
+/* ------------------------------------------------------------------ */
+/*  DESIGN TOKENS — Soham Rangdal Portfolio                            */
+/*  Premium editorial + creative technology identity                   */
+/* ------------------------------------------------------------------ */
+@theme {
+  /* Color system */
+  --color-ivory: #f3f0e8;
+  --color-forest: #173b35;
+  --color-forest-600: #1e4b43;
+  --color-forest-300: #2f6b60;
+  --color-sage: #dce8df;
+  --color-sage-200: #c9dccf;
+  --color-terracotta: #d77b5b;
+  --color-terracotta-600: #c2653f;
+  --color-charcoal: #242824;
+  --color-charcoal-700: #333833;
+  --color-muted: #777b75;
+  --color-line: #d8d2c4;
+  --color-project-graphite: #3b494d;
+  --color-project-clay: #62463b;
+  --color-project-ochre: #5d553c;
+  --color-project-plum: #554858;
+  --color-project-slate: #3d525b;
+  --color-project-accent-graphite: #b9d0cc;
+  --color-project-accent-clay: #efad8d;
+  --color-project-accent-ochre: #e4d08b;
+  --color-project-accent-plum: #d3b3d2;
+  --color-project-accent-slate: #a9ccd2;
+
+  /* Typography */
+  --font-display: "Fraunces", ui-serif, Georgia, "Times New Roman", serif;
+  --font-sans: "Source Sans 3", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", monospace;
+
+  /* Editorial display scale */
+  --text-display: clamp(3rem, 11vw, 12rem);
+  --text-hero: clamp(2.75rem, 9vw, 10rem);
+  --text-section: clamp(2rem, 5.5vw, 5.5rem);
+
+  /* Motion */
+  --ease-editorial: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-inout-soft: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+/* ------------------------------------------------------------------ */
+/*  BASE                                                               */
+/* ------------------------------------------------------------------ */
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    scroll-behavior: auto; /* Lenis handles smooth scroll */
+    /* Keep iOS from inflating body text on small screens. */
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    /* `clip` (not `hidden`) prevents sideways scroll without creating a
+       scroll container — so `position: sticky` keeps working. */
+    overflow-x: clip;
+  }
+
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+  .lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+  }
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
+
+  body {
+    margin: 0;
+    background-color: var(--color-ivory);
+    color: var(--color-charcoal);
+    font-family: var(--font-sans);
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: clip;
+    font-synthesis: none;
+    /* Kill the 300ms tap delay and the grey tap flash on touch devices. */
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  button,
+  a,
+  [role="button"] {
+    touch-action: manipulation;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    line-height: 0.98;
+    letter-spacing: -0.03em;
+    margin: 0;
+    text-wrap: balance;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  button {
+    font: inherit;
+    color: inherit;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+
+  ::selection {
+    background: var(--color-terracotta);
+    color: var(--color-ivory);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-terracotta);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  /* Custom cursor: hide native pointer on fine-pointer devices */
+  @media (pointer: fine) {
+    body.has-custom-cursor,
+    body.has-custom-cursor * {
+      cursor: none;
+    }
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: color-mix(in srgb, var(--color-forest) 35%, transparent);
+    border-radius: 999px;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/*  COMPONENT UTILITIES                                                */
+/* ------------------------------------------------------------------ */
+@layer components {
+  .container-editorial {
+    width: 100%;
+    max-width: 1440px;
+    margin-inline: auto;
+    padding-inline: clamp(1.25rem, 5vw, 5rem);
+  }
+
+  .section-pad {
+    padding-block: clamp(5rem, 12vh, 10rem);
+  }
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+  }
+
+  .display-heading {
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: -0.035em;
+    line-height: 0.94;
+  }
+
+  .text-outline {
+    color: transparent;
+    -webkit-text-stroke: 1px currentColor;
+  }
+
+  .hairline {
+    height: 1px;
+    width: 100%;
+    background: color-mix(in srgb, currentColor 18%, transparent);
+  }
+
+  .grain::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.05;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E");
+    mix-blend-mode: multiply;
+  }
+
+  /* Crosshair cursor — four white segments with a center dot that blend
+     against whatever is beneath them (difference) and bloom on hover. */
+  .cursor-cross {
+    --seg: 8px;
+    --gap: 3px;
+    --thick: 1.5px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 0;
+    height: 0;
+    z-index: 9999;
+    pointer-events: none;
+    mix-blend-mode: difference;
+  }
+  .cursor-cross[data-hover="true"] {
+    --seg: 11px;
+    --gap: 9px;
+    --thick: 2px;
+  }
+  .cursor-cross[data-down="true"] {
+    --seg: 6px;
+    --gap: 1px;
+    --thick: 2px;
+  }
+  .cursor-cross__seg {
+    position: absolute;
+    left: 0;
+    top: 0;
+    background: #ffffff;
+    transition: transform 0.22s var(--ease-editorial), width 0.22s var(--ease-editorial),
+      height 0.22s var(--ease-editorial);
+  }
+  .cursor-cross__seg--t {
+    width: var(--thick);
+    height: var(--seg);
+    transform: translate(-50%, calc(-100% - var(--gap)));
+  }
+  .cursor-cross__seg--b {
+    width: var(--thick);
+    height: var(--seg);
+    transform: translate(-50%, var(--gap));
+  }
+  .cursor-cross__seg--l {
+    width: var(--seg);
+    height: var(--thick);
+    transform: translate(calc(-100% - var(--gap)), -50%);
+  }
+  .cursor-cross__seg--r {
+    width: var(--seg);
+    height: var(--thick);
+    transform: translate(var(--gap), -50%);
+  }
+  .cursor-cross__dot {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 2px;
+    height: 2px;
+    background: #ffffff;
+    transform: translate(-50%, -50%);
+    transition: opacity 0.2s ease;
+  }
+  .cursor-cross[data-hover="true"] .cursor-cross__dot {
+    opacity: 0;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/*  ACCESSIBILITY                                                      */
+/* ------------------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Screen-reader only */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
